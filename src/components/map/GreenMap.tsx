@@ -8,7 +8,8 @@ function MapFocus({ center }: { center: Coordinates }) {
   const map = useMap();
 
   useEffect(() => {
-    map.setView([center.latitude, center.longitude], center.latitude === CITY_COORDINATES.Cameroon.latitude ? 6 : 13);
+    const zoom = center.latitude === CITY_COORDINATES.Bafoussam.latitude ? 13 : center.latitude === CITY_COORDINATES.Cameroon.latitude ? 6 : 3;
+    map.setView([center.latitude, center.longitude], zoom);
   }, [center, map]);
 
   return null;

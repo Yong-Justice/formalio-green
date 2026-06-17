@@ -1,4 +1,4 @@
-export type IssueType = 'illegal_dumping' | 'water_pollution' | 'blocked_drainage' | 'plastic_waste' | 'deforestation';
+export type IssueType = 'illegal_dumping' | 'water_pollution' | 'blocked_drainage' | 'plastic_waste' | 'flood_risk' | 'deforestation' | 'other';
 export type SeverityLevel = 'low' | 'medium' | 'high';
 export type ReportStatus = 'reported' | 'under_review' | 'mission_created' | 'resolved' | 'rejected';
 

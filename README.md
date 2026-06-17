@@ -42,6 +42,7 @@ Copy `.env.example` to a private `.env` when real Supabase credentials are ready
 - `/leaderboard`
 - `/challenges`
 - `/profile`
+- `/admin-preview`
 
 ## Supabase
 
@@ -53,6 +54,10 @@ SQL foundation files live in `supabase/`:
 - `seed.sql`
 
 The SQL includes explicit grants plus RLS policies for the MVP access model.
+
+## MVP Demo Flow
+
+The current demo supports report -> map marker -> mission join -> proof submission -> demo approval -> resolved marker -> Eco Points and leaderboard update through local Zustand state.
 
 ## Documentation
 

@@ -1,4 +1,4 @@
-export type UserLevel = 'Beginner' | 'Eco Helper' | 'Green Champion' | 'Planet Guardian';
+export type UserLevel = 'Beginner' | 'Green Citizen' | 'Environmental Guardian' | 'Green Champion' | 'Earth Protector';
 
 export type Profile = {
   id: string;

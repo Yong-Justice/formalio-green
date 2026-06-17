@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { mockReports } from '../data/mockReports';
 import type { EnvironmentalReport, ReportStatus } from '../types/report';
+import { useEcoScoreStore } from './ecoScoreStore';
 
 type ReportState = {
   reports: EnvironmentalReport[];
@@ -21,6 +22,7 @@ export const useReportStore = create<ReportState>((set, get) => ({
       updatedAt: new Date().toISOString(),
     };
     set((state) => ({ reports: [newReport, ...state.reports] }));
+    useEcoScoreStore.getState().addEcoPoints(newReport.userId, 20, 'Report submitted', 'report', newReport.id);
     return newReport;
   },
   updateReportStatus: (id, status) =>

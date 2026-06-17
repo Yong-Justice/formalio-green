@@ -4,5 +4,5 @@ import PageContainer from '../components/common/PageContainer';
 
 export default function SubmitProof() {
   const { missionId } = useParams();
-  return <PageContainer title="Submit Proof" eyebrow={`Mission ${missionId || ''}`}><ProofUploadForm /></PageContainer>;
+  return <PageContainer title="Submit Proof" eyebrow="Before and after"><ProofUploadForm missionId={missionId || ''} /></PageContainer>;
 }

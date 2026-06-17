@@ -20,4 +20,9 @@ export type MapMarker = Coordinates & {
   type: 'report' | 'mission' | 'achievement';
   severity?: SeverityLevel;
   issueType?: IssueType;
+  reportId?: string;
+  missionId?: string;
+  volunteersNeeded?: number;
+  volunteersJoined?: number;
+  ecoPointsReward?: number;
 };

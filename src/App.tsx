@@ -14,6 +14,7 @@ import VerificationStatus from './pages/VerificationStatus';
 import Leaderboard from './pages/Leaderboard';
 import Challenges from './pages/Challenges';
 import Profile from './pages/Profile';
+import AdminPreview from './pages/AdminPreview';
 import NotFound from './pages/NotFound';
 
 export default function App() {
@@ -35,6 +36,7 @@ export default function App() {
           <Route path="/leaderboard" element={<Leaderboard />} />
           <Route path="/challenges" element={<Challenges />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/admin-preview" element={<AdminPreview />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </PhoneFrame>

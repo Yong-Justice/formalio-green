@@ -1,6 +1,6 @@
 # App Architecture
 
-The frontend is React + Vite + TypeScript with React Router routes inside a reusable mobile `PhoneFrame`. Zustand stores simulate auth, reports, missions, Eco Points, and app preferences until Supabase is fully connected.
+The frontend is React + Vite + TypeScript with React Router routes inside a reusable mobile `PhoneFrame`. Zustand stores simulate auth, reports, missions, proofs, Eco Points, and app preferences until Supabase is fully connected.
 
 Services in `src/services` define Supabase integration boundaries for auth, reports, missions, uploads, maps, and Eco Points. Components are grouped by domain: map, reports, missions, dashboard, leaderboard, and shared common UI.
 

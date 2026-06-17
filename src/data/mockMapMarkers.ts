@@ -3,7 +3,7 @@ import { mockReports } from './mockReports';
 import { convertMissionToMarker, convertReportToMarker } from '../services/mapService';
 
 export const mockMapMarkers = [
-  ...mockReports.map(convertReportToMarker),
+  ...mockReports.map((report) => convertReportToMarker(report)),
   ...mockMissions.map(convertMissionToMarker),
   {
     id: 'achievement-bafoussam-core',
