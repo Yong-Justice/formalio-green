@@ -1,13 +1,20 @@
 import { Link } from 'react-router-dom';
-import { APP_NAME, TAGLINE } from '../utils/constants';
 
 export default function SplashScreen() {
   return (
-    <main className="flex flex-1 flex-col items-center justify-center bg-green-dark p-8 text-center text-white">
-      <div className="mb-6 h-20 w-20 rounded-2xl bg-primary" />
-      <h1 className="text-3xl font-bold">{APP_NAME}</h1>
-      <p className="mt-2 text-green-light">{TAGLINE}</p>
-      <Link className="mt-8 rounded-lg bg-white px-5 py-3 text-sm font-semibold text-green-dark" to="/onboarding">Continue</Link>
+    <main className="relative flex flex-1 overflow-hidden bg-green-dark text-center text-white">
+      <img
+        src="/images/launch-screen.png"
+        alt="Formalio Green launch artwork"
+        className="absolute inset-0 h-full w-full object-cover"
+      />
+      <div className="absolute inset-0 bg-green-dark/10" />
+      <Link
+        className="absolute inset-x-8 bottom-8 rounded-full bg-white/95 px-5 py-3 text-sm font-bold text-green-dark shadow-lg transition hover:bg-green-light"
+        to="/onboarding"
+      >
+        Continue
+      </Link>
     </main>
   );
 }

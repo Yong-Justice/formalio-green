@@ -13,11 +13,12 @@ type PhoneFrameProps = {
 export default function PhoneFrame({ children }: PhoneFrameProps) {
   const location = useLocation();
   const showChrome = !hideNavigationRoutes.has(location.pathname);
+  const showStatusBar = location.pathname !== '/';
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-slate-200 p-4">
       <div className="flex h-[844px] w-full max-w-[390px] flex-col overflow-hidden rounded-[32px] border-[10px] border-slate-950 bg-white shadow-phone">
-        <StatusBar />
+        {showStatusBar ? <StatusBar /> : null}
         {showChrome ? <Header /> : null}
         <div className="flex min-h-0 flex-1 flex-col">{children}</div>
         {showChrome ? <BottomNavigation /> : null}
