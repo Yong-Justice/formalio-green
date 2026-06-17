@@ -1,0 +1,9 @@
+import type { Challenge } from '../types/challenge';
+
+export const mockChallenges: Challenge[] = [
+  { id: 'challenge-city-cleanup', title: 'Bafoussam City Cleanup', description: 'Resolve 20 public waste reports across Bafoussam.', category: 'cleanup', city: 'Bafoussam', region: 'West Region', targetValue: 20, currentValue: 6, rewardPoints: 300, startDate: '2026-07-01', endDate: '2026-08-01', status: 'active', createdAt: '2026-03-01T08:00:00Z' },
+  { id: 'challenge-tree-planting', title: 'Tree Planting Challenge', description: 'Plant 500 trees across West Region communities.', category: 'tree_planting', city: 'Dschang', region: 'West Region', targetValue: 500, currentValue: 130, rewardPoints: 500, startDate: '2026-07-01', endDate: '2026-09-01', status: 'active', createdAt: '2026-03-01T08:00:00Z' },
+  { id: 'challenge-zero-waste-market', title: 'Zero Waste Market Drive', description: 'Reduce visible market waste through weekly cleanup missions.', category: 'cleanup', city: 'Bafoussam', region: 'West Region', targetValue: 12, currentValue: 3, rewardPoints: 250, startDate: '2026-07-01', endDate: '2026-08-15', status: 'active', createdAt: '2026-03-01T08:00:00Z' },
+  { id: 'challenge-river-rescue', title: 'River Rescue Campaign', description: 'Document and clean polluted stream and river areas.', category: 'river_cleanup', city: 'Bafoussam', region: 'West Region', targetValue: 8, currentValue: 2, rewardPoints: 350, startDate: '2026-07-01', endDate: '2026-08-30', status: 'active', createdAt: '2026-03-01T08:00:00Z' },
+  { id: 'challenge-school-green', title: 'School Green Campaign', description: 'Run green awareness events with schools.', category: 'awareness', city: 'Yaounde', region: 'Centre Region', targetValue: 10, currentValue: 1, rewardPoints: 220, startDate: '2026-07-01', endDate: '2026-09-01', status: 'active', createdAt: '2026-03-01T08:00:00Z' },
+];
