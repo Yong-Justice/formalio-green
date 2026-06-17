@@ -3,11 +3,12 @@ import type { Coordinates } from '../types/map';
 
 export function useGeolocation() {
   const [coordinates, setCoordinates] = useState<Coordinates | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(
+    typeof navigator !== 'undefined' && !navigator.geolocation ? 'Geolocation is not supported by this browser.' : null,
+  );
 
   useEffect(() => {
     if (!navigator.geolocation) {
-      setError('Geolocation is not supported by this browser.');
       return;
     }
 
