@@ -118,6 +118,14 @@ create table if not exists public.user_badges (
   unique (user_id, badge_id)
 );
 
+create index if not exists reports_user_id_idx on public.reports(user_id);
+create index if not exists missions_report_id_idx on public.missions(report_id);
+create index if not exists mission_participants_user_id_idx on public.mission_participants(user_id);
+create index if not exists proofs_mission_id_idx on public.proofs(mission_id);
+create index if not exists proofs_user_id_idx on public.proofs(user_id);
+create index if not exists eco_points_user_id_idx on public.eco_points(user_id);
+create index if not exists user_badges_badge_id_idx on public.user_badges(badge_id);
+
 grant select on public.profiles, public.reports, public.missions, public.challenges, public.badges to anon, authenticated;
 grant insert, update on public.profiles, public.reports, public.mission_participants, public.proofs to authenticated;
 grant select on public.mission_participants, public.proofs, public.eco_points, public.user_badges to authenticated;
