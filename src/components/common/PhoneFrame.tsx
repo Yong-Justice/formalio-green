@@ -15,7 +15,8 @@ export default function PhoneFrame({ children }: PhoneFrameProps) {
   const location = useLocation();
   const [scale, setScale] = useState(1);
   const showChrome = !hideNavigationRoutes.has(location.pathname);
-  const showHeader = showChrome && !hideHeaderRoutes.has(location.pathname);
+  const routeOwnsHeader = hideHeaderRoutes.has(location.pathname) || location.pathname.startsWith('/missions/');
+  const showHeader = showChrome && !routeOwnsHeader;
   const showStatusBar = showChrome;
 
   useEffect(() => {

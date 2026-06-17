@@ -19,5 +19,8 @@ export const BAFOUSSAM_ZONES: Record<string, Coordinates> = {
   'Tyo-Ville': { latitude: 5.475, longitude: 10.4284 },
   Djeleng: { latitude: 5.4855, longitude: 10.4302 },
   Eveche: { latitude: 5.4745, longitude: 10.4101 },
+  Kamkop: { latitude: 5.4878, longitude: 10.4041 },
+  'Lake Baleng': { latitude: 5.4265, longitude: 10.3922 },
+  'Marche B': { latitude: 5.4792, longitude: 10.4108 },
   'Mifi River Area': { latitude: 5.4639, longitude: 10.4049 },
 };

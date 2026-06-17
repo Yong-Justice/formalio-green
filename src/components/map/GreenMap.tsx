@@ -19,15 +19,24 @@ type GreenMapProps = {
   center?: Coordinates;
   zoom?: number;
   className?: string;
+  onMarkerSelect?: (marker: MapMarkerType) => void;
+  selectedMarkerId?: string;
 };
 
-export default function GreenMap({ markers, center = CITY_COORDINATES.Bafoussam, zoom = 13, className = 'h-[360px] overflow-hidden rounded-lg border border-slate-200' }: GreenMapProps) {
+export default function GreenMap({ markers, center = CITY_COORDINATES.Bafoussam, zoom = 13, className = 'h-[360px] overflow-hidden rounded-lg border border-slate-200', onMarkerSelect, selectedMarkerId }: GreenMapProps) {
   return (
     <div className={className}>
       <MapContainer center={[center.latitude, center.longitude]} zoom={zoom} zoomControl={false} scrollWheelZoom className="h-full">
         <MapFocus center={center} zoom={zoom} />
         <TileLayer attribution="&copy; OpenStreetMap contributors" url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-        {markers.map((marker) => <MapMarker key={`${marker.type}-${marker.id}`} marker={marker} />)}
+        {markers.map((marker) => (
+          <MapMarker
+            key={`${marker.type}-${marker.id}`}
+            marker={marker}
+            onSelect={onMarkerSelect}
+            selected={marker.id === selectedMarkerId}
+          />
+        ))}
         <ZoomControl position="bottomright" />
       </MapContainer>
     </div>
