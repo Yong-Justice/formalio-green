@@ -20,6 +20,19 @@ a {
   text-decoration: none;
 }
 
+.phone-shell,
+.phone-shell * {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.phone-shell::-webkit-scrollbar,
+.phone-shell *::-webkit-scrollbar {
+  display: none;
+  height: 0;
+  width: 0;
+}
+
 .leaflet-container {
   height: 100%;
   width: 100%;

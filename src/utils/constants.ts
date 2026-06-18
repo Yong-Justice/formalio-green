@@ -18,6 +18,17 @@ export const COLORS = {
   textDark: '#111827',
 } as const;
 
-export const ISSUE_TYPES: IssueType[] = ['illegal_dumping', 'water_pollution', 'blocked_drainage', 'plastic_waste', 'flood_risk', 'deforestation', 'other'];
+export const ISSUE_TYPES: IssueType[] = [
+  'illegal_dumping',
+  'open_waste_pile',
+  'missing_public_bins',
+  'construction_debris',
+  'water_pollution',
+  'blocked_drainage',
+  'plastic_waste',
+  'flood_risk',
+  'deforestation',
+  'other',
+];
 export const MISSION_CATEGORIES: MissionCategory[] = ['cleanup', 'tree_planting', 'river_cleanup', 'lake_protection', 'awareness'];
 export const SEVERITY_LEVELS: SeverityLevel[] = ['low', 'medium', 'high'];

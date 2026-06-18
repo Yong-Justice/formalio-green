@@ -2,15 +2,29 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { LocateFixed, MapPin } from 'lucide-react';
+import { useGeolocation } from '../../hooks/useGeolocation';
 import { useReportStore } from '../../store/reportStore';
 import { ISSUE_TYPES } from '../../utils/constants';
+import { issueTypeLabel } from '../../utils/issueLabels';
 import Button from '../common/Button';
 import ReportSuccessModal from './ReportSuccessModal';
 
 const reportSchema = z.object({
   title: z.string().min(3),
   description: z.string().min(10),
-  issueType: z.enum(['illegal_dumping', 'water_pollution', 'blocked_drainage', 'plastic_waste', 'flood_risk', 'deforestation', 'other']),
+  issueType: z.enum([
+    'illegal_dumping',
+    'open_waste_pile',
+    'missing_public_bins',
+    'construction_debris',
+    'water_pollution',
+    'blocked_drainage',
+    'plastic_waste',
+    'flood_risk',
+    'deforestation',
+    'other',
+  ]),
   severity: z.enum(['low', 'medium', 'high']),
   city: z.string().min(2),
   region: z.string().min(2),
@@ -24,6 +38,7 @@ type ReportFormValues = z.infer<typeof reportSchema>;
 export default function ReportForm() {
   const [saved, setSaved] = useState(false);
   const addReport = useReportStore((state) => state.addReport);
+  const { coordinates } = useGeolocation();
   const { register, handleSubmit, formState: { errors } } = useForm<ReportFormValues>({
     resolver: zodResolver(reportSchema),
     defaultValues: {
@@ -40,7 +55,12 @@ export default function ReportForm() {
   });
 
   function onSubmit(values: ReportFormValues) {
-    addReport({ ...values, userId: 'user-justice' });
+    addReport({
+      ...values,
+      latitude: coordinates?.latitude ?? values.latitude,
+      longitude: coordinates?.longitude ?? values.longitude,
+      userId: 'user-justice',
+    });
     setSaved(true);
   }
 
@@ -54,7 +74,7 @@ export default function ReportForm() {
         <label className="block">
           <span className="mb-1 block text-sm font-bold text-ink">Problem type</span>
           <select className="w-full rounded-lg border border-slate-300 p-3" {...register('issueType')}>
-            {ISSUE_TYPES.map((type) => <option key={type} value={type}>{type.replaceAll('_', ' ')}</option>)}
+            {ISSUE_TYPES.map((type) => <option key={type} value={type}>{issueTypeLabel(type)}</option>)}
           </select>
         </label>
         <label className="block">
@@ -80,16 +100,21 @@ export default function ReportForm() {
           <input className="w-full rounded-lg border border-slate-300 p-3" {...register('region')} />
         </label>
       </div>
-      <div className="grid grid-cols-2 gap-2">
-        <label className="block">
-          <span className="mb-1 block text-sm font-bold text-ink">Latitude</span>
-          <input className="w-full rounded-lg border border-slate-300 p-3" type="number" step="any" {...register('latitude', { valueAsNumber: true })} />
-        </label>
-        <label className="block">
-          <span className="mb-1 block text-sm font-bold text-ink">Longitude</span>
-          <input className="w-full rounded-lg border border-slate-300 p-3" type="number" step="any" {...register('longitude', { valueAsNumber: true })} />
-        </label>
-      </div>
+      <section className="flex items-center gap-3 rounded-lg border border-slate-200 bg-white p-3">
+        <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-green-light text-primary">
+          <MapPin size={22} />
+        </span>
+        <div className="min-w-0 flex-1">
+          <p className="font-bold text-ink">Bafoussam, West Region</p>
+          <p className="text-xs text-slate-500">{coordinates ? 'GPS auto-detected' : 'Detecting GPS automatically'}</p>
+        </div>
+        <span className="flex items-center gap-1 rounded-full bg-green-light px-2.5 py-1 text-[11px] font-extrabold text-primary">
+          <LocateFixed size={14} />
+          AUTO
+        </span>
+        <input type="hidden" {...register('latitude', { valueAsNumber: true })} />
+        <input type="hidden" {...register('longitude', { valueAsNumber: true })} />
+      </section>
       <label className="block rounded-lg border border-dashed border-primary bg-green-light p-4 text-center text-sm font-semibold text-green-dark">
         Photo placeholder/upload
         <input className="sr-only" type="file" accept="image/*" />

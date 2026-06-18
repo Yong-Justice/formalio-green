@@ -2,6 +2,7 @@ import type { MapMarker } from '../types/map';
 import type { EnvironmentalReport } from '../types/report';
 import type { Mission } from '../types/mission';
 import { CITY_COORDINATES } from '../utils/coordinates';
+import { issueTypeLabel } from '../utils/issueLabels';
 import { markerColorForStatus } from '../utils/markerColors';
 
 export function convertReportToMarker(report: EnvironmentalReport, linkedMission?: Mission): MapMarker {
@@ -16,7 +17,7 @@ export function convertReportToMarker(report: EnvironmentalReport, linkedMission
     status: report.status,
     severity: report.severity,
     issueType: report.issueType,
-    spotKind: report.issueType.replaceAll('_', ' '),
+    spotKind: issueTypeLabel(report.issueType),
     reportedAt: report.createdAt,
     photoUrl: report.photoUrl,
     type: 'report',

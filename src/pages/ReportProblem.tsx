@@ -2,21 +2,13 @@ import { ArrowLeft, Camera, ChevronDown, LocateFixed, MapPin } from 'lucide-reac
 import { useState, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ReportSuccessModal from '../components/reports/ReportSuccessModal';
+import { useGeolocation } from '../hooks/useGeolocation';
 import { useAuthStore } from '../store/authStore';
 import { useReportStore } from '../store/reportStore';
 import type { IssueType, SeverityLevel } from '../types/report';
 import { ISSUE_TYPES } from '../utils/constants';
+import { issueTypeLabels } from '../utils/issueLabels';
 import { statusLabel } from '../utils/statusLabels';
-
-const issueLabels: Record<IssueType, string> = {
-  illegal_dumping: 'Illegal Dumping',
-  water_pollution: 'Water Pollution',
-  blocked_drainage: 'Blocked Drainage',
-  plastic_waste: 'Plastic Waste',
-  flood_risk: 'Flood Risk',
-  deforestation: 'Deforestation',
-  other: 'Other Issue',
-};
 
 const severityOptions: SeverityLevel[] = ['low', 'medium', 'high'];
 
@@ -24,6 +16,7 @@ export default function ReportProblem() {
   const navigate = useNavigate();
   const addReport = useReportStore((state) => state.addReport);
   const currentUser = useAuthStore((state) => state.currentUser);
+  const { coordinates } = useGeolocation();
   const [issueType, setIssueType] = useState<IssueType | ''>('');
   const [severity, setSeverity] = useState<SeverityLevel>('high');
   const [description, setDescription] = useState('');
@@ -37,14 +30,14 @@ export default function ReportProblem() {
 
     addReport({
       userId: currentUser?.id || 'user-justice',
-      title: `${issueLabels[selectedIssue]} in Bafoussam`,
+      title: `${issueTypeLabels[selectedIssue]} in Bafoussam`,
       issueType: selectedIssue,
       description: cleanDescription,
       severity,
       city: 'Bafoussam',
       region: 'West Region',
-      latitude: 5.4812,
-      longitude: 10.4185,
+      latitude: coordinates?.latitude ?? 5.4812,
+      longitude: coordinates?.longitude ?? 10.4185,
       photoUrl: fileName ? '/images/launch-screen.png' : undefined,
     });
     setSaved(true);
@@ -74,7 +67,7 @@ export default function ReportProblem() {
               aria-label="Select issue type"
             >
               <option value="">Select issue type</option>
-              {ISSUE_TYPES.map((type) => <option key={type} value={type}>{issueLabels[type]}</option>)}
+              {ISSUE_TYPES.map((type) => <option key={type} value={type}>{issueTypeLabels[type]}</option>)}
             </select>
             <ChevronDown size={28} className="pointer-events-none absolute right-5 top-1/2 -translate-y-1/2 text-ink" />
           </span>
@@ -82,15 +75,17 @@ export default function ReportProblem() {
 
         <section>
           <h2 className="mb-1.5 text-base font-extrabold">Location</h2>
-          <div className="flex h-16 items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 shadow-sm">
+          <div className="grid h-16 grid-cols-[44px_1fr_auto] items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 shadow-sm">
             <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-green-light text-primary">
               <MapPin size={25} />
             </span>
             <div className="min-w-0 flex-1">
-              <p className="text-base font-extrabold">Bafoussam, West Region</p>
-              <p className="text-sm text-slate-500">GPS auto-detected</p>
+              <p className="truncate text-sm font-extrabold">Bafoussam, West Region</p>
+              <p className="truncate text-xs font-medium text-slate-500">{coordinates ? 'GPS auto-detected' : 'Detecting GPS automatically'}</p>
             </div>
-            <LocateFixed size={27} className="text-ink" />
+            <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-green-light text-primary">
+              <LocateFixed size={21} />
+            </span>
           </div>
         </section>
 

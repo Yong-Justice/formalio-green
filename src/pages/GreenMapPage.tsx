@@ -7,6 +7,7 @@ import { useAuthStore } from '../store/authStore';
 import { useMissionStore } from '../store/missionStore';
 import type { Coordinates, MapMarker } from '../types/map';
 import { BAFOUSSAM_ZONES, CITY_COORDINATES } from '../utils/coordinates';
+import { issueTypeLabel } from '../utils/issueLabels';
 import { statusLabel } from '../utils/statusLabels';
 
 type LocationOption = {
@@ -65,23 +66,13 @@ function markerMatchesFilter(marker: MapMarker, filter: SpotFilter) {
   return marker.type === 'achievement';
 }
 
-const issueLabels: Record<string, string> = {
-  illegal_dumping: 'Waste Pollution',
-  water_pollution: 'Water Pollution',
-  blocked_drainage: 'Blocked Drainage',
-  plastic_waste: 'Plastic Waste',
-  flood_risk: 'Flood Risk',
-  deforestation: 'Deforestation',
-  other: 'Community Issue',
-};
-
 function formatDate(date?: string) {
   if (!date) return 'Recently reported';
   return new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).format(new Date(date));
 }
 
 function spotCategory(marker: MapMarker) {
-  if (marker.issueType) return issueLabels[marker.issueType];
+  if (marker.issueType) return issueTypeLabel(marker.issueType);
   if (marker.type === 'mission') return 'Community Mission';
   if (marker.type === 'achievement') return 'Fixed / Restored';
   return marker.spotKind ? statusLabel(marker.spotKind) : 'Green Map Spot';
@@ -111,6 +102,14 @@ function urgencyClass(marker: MapMarker) {
   return 'bg-blue-100 text-mission';
 }
 
+function beforePhotoForMarker(marker: MapMarker) {
+  if (marker.photoUrl) return marker.photoUrl;
+  if (marker.issueType === 'water_pollution' || marker.spotKind === 'river cleanup') return '/images/missions/river-mifi.jpg';
+  if (marker.issueType === 'deforestation' || marker.spotKind === 'tree planting') return '/images/missions/tree-planting.jpg';
+  if (marker.spotKind === 'lake protection') return '/images/missions/lake-baleng.jpg';
+  return '/images/missions/cleanup-market.jpg';
+}
+
 type SpotDetailsSheetProps = {
   marker: MapMarker;
   detailMissionId?: string;
@@ -121,6 +120,7 @@ type SpotDetailsSheetProps = {
 function SpotDetailsSheet({ marker, detailMissionId, onClose, onJoinMission }: SpotDetailsSheetProps) {
   const volunteersNeeded = marker.volunteersNeeded ?? (marker.severity === 'high' ? 15 : marker.severity === 'medium' ? 10 : 6);
   const detailsTo = detailMissionId ? `/missions/${detailMissionId}` : '/missions';
+  const beforePhoto = beforePhotoForMarker(marker);
 
   return (
     <section className="absolute inset-x-0 bottom-0 z-[1000] max-h-[64%] overflow-y-auto rounded-t-[30px] bg-white px-6 pb-5 pt-4 shadow-[0_-18px_45px_rgba(15,23,42,0.18)]">
@@ -170,13 +170,10 @@ function SpotDetailsSheet({ marker, detailMissionId, onClose, onJoinMission }: S
       <div className="my-4 h-px bg-slate-200" />
 
       <p className="mb-3 text-sm font-extrabold text-ink">Before Photo</p>
-      <div className="relative h-24 overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-100 via-lime-100 to-slate-200">
-        <div className="absolute inset-x-0 bottom-0 h-10 bg-amber-900/25" />
-        <div className="absolute -bottom-3 left-5 h-12 w-16 rotate-[-8deg] rounded-full bg-slate-800/40" />
-        <div className="absolute bottom-2 left-20 h-7 w-10 rotate-6 rounded-full bg-white/70" />
-        <div className="absolute bottom-1 right-16 h-8 w-14 rotate-[-12deg] rounded-full bg-sky-500/45" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/25 to-transparent" />
-        <span className="absolute bottom-3 left-4 rounded-full bg-white/90 px-3 py-1 text-xs font-bold text-slate-700">{marker.city} field report</span>
+      <div className="relative h-28 overflow-hidden rounded-2xl bg-green-light">
+        <img src={beforePhoto} alt={`${marker.title} before cleanup`} className="h-full w-full object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent" />
+        <span className="absolute bottom-3 left-4 rounded-full bg-white/92 px-3 py-1 text-xs font-extrabold text-slate-700">{marker.city} field report</span>
       </div>
 
       <div className="mt-5 grid grid-cols-2 gap-4">
