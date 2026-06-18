@@ -172,7 +172,7 @@ export default function MissionDetails() {
         </div>
       </section>
 
-      <div className="sticky bottom-0 z-20 -mx-5 mt-4 border-t border-slate-100 bg-white/95 px-5 pb-4 pt-3 shadow-[0_-10px_24px_rgba(15,23,42,0.08)] backdrop-blur">
+      <div className="mt-4 rounded-3xl border border-slate-100 bg-white p-3 shadow-[0_8px_24px_rgba(15,23,42,0.07)]">
         <button
           type="button"
           onClick={handleJoinMission}
