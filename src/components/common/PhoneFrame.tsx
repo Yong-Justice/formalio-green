@@ -5,7 +5,7 @@ import Header from './Header';
 import StatusBar from './StatusBar';
 
 const hideNavigationRoutes = new Set(['/', '/onboarding', '/login', '/register']);
-const hideHeaderRoutes = new Set(['/home', '/map']);
+const hideHeaderRoutes = new Set(['/home', '/map', '/missions', '/challenges', '/report']);
 
 type PhoneFrameProps = {
   children: ReactNode;
