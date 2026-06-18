@@ -1,4 +1,4 @@
-import { ArrowLeft, CalendarDays, Clock3, Droplet, Footprints, Hand, Leaf, MapPin, Share2, Shield, Sun, Users } from 'lucide-react';
+import { ArrowLeft, CalendarDays, CheckCircle2, Clock3, Droplet, Footprints, Hand, Leaf, MapPin, Share2, Shield, Sun, Users } from 'lucide-react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import type { MissionCategory } from '../types/mission';
 import { useAuthStore } from '../store/authStore';
@@ -172,11 +172,22 @@ export default function MissionDetails() {
         </div>
       </section>
 
-      <button type="button" onClick={handleJoinMission} className="mt-3 flex min-h-14 items-center justify-center gap-3 rounded-2xl bg-primary text-lg font-extrabold text-white shadow-[0_12px_22px_rgba(22,163,74,0.28)]">
-        <Leaf size={26} />
-        {hasJoined ? 'Joined Mission' : 'Join Mission'}
-      </button>
-      <Link to={`/submit-proof/${mission.id}`} className="mt-3 text-center text-sm font-extrabold text-primary">Submit proof after the mission</Link>
+      <div className="sticky bottom-0 z-20 -mx-5 mt-4 border-t border-slate-100 bg-white/95 px-5 pb-4 pt-3 shadow-[0_-10px_24px_rgba(15,23,42,0.08)] backdrop-blur">
+        <button
+          type="button"
+          onClick={handleJoinMission}
+          disabled={hasJoined}
+          className={`flex min-h-14 w-full items-center justify-center gap-2.5 rounded-2xl px-5 text-base font-extrabold transition active:scale-[0.99] ${
+            hasJoined
+              ? 'border border-green-200 bg-green-light text-primary shadow-none'
+              : 'bg-primary text-white shadow-[0_14px_26px_rgba(22,163,74,0.28)]'
+          }`}
+        >
+          {hasJoined ? <CheckCircle2 size={23} /> : <Leaf size={24} />}
+          <span>{hasJoined ? 'Mission Joined' : 'Join Mission'}</span>
+        </button>
+        <Link to={`/submit-proof/${mission.id}`} className="mt-3 block text-center text-sm font-extrabold text-primary">Submit proof after the mission</Link>
+      </div>
     </main>
   );
 }
