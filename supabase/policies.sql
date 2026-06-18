@@ -8,6 +8,23 @@ alter table public.challenges enable row level security;
 alter table public.badges enable row level security;
 alter table public.user_badges enable row level security;
 
+drop policy if exists "profiles are publicly readable" on public.profiles;
+drop policy if exists "users can insert own profile" on public.profiles;
+drop policy if exists "users can update own profile" on public.profiles;
+drop policy if exists "reports are publicly readable" on public.reports;
+drop policy if exists "users can create own reports" on public.reports;
+drop policy if exists "users can update own draft reports" on public.reports;
+drop policy if exists "missions are publicly readable" on public.missions;
+drop policy if exists "participants can read mission joins" on public.mission_participants;
+drop policy if exists "users can join missions as themselves" on public.mission_participants;
+drop policy if exists "users can update own participation" on public.mission_participants;
+drop policy if exists "users can read own proofs" on public.proofs;
+drop policy if exists "joined users can submit proof" on public.proofs;
+drop policy if exists "users can read own points" on public.eco_points;
+drop policy if exists "challenges are publicly readable" on public.challenges;
+drop policy if exists "badges are publicly readable" on public.badges;
+drop policy if exists "users can read own badges" on public.user_badges;
+
 create policy "profiles are publicly readable" on public.profiles for select using (true);
 create policy "users can insert own profile" on public.profiles for insert to authenticated with check ((select auth.uid()) = id);
 create policy "users can update own profile" on public.profiles for update to authenticated using ((select auth.uid()) = id) with check ((select auth.uid()) = id);

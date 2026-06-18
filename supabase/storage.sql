@@ -6,6 +6,11 @@ values
   ('mission-images', 'mission-images', true)
 on conflict (id) do nothing;
 
+drop policy if exists "authenticated users can upload report photos" on storage.objects;
+drop policy if exists "authenticated users can upload proof photos" on storage.objects;
+drop policy if exists "users can upload profile photos" on storage.objects;
+drop policy if exists "authenticated users can upload mission images" on storage.objects;
+
 create policy "authenticated users can upload report photos" on storage.objects for insert to authenticated with check (bucket_id = 'report-photos');
 
 create policy "authenticated users can upload proof photos" on storage.objects for insert to authenticated with check (bucket_id = 'proof-photos');
